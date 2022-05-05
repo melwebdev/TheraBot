@@ -6,6 +6,7 @@ import logging
 import requests
 
 from string import Template
+from decouple import config
 from discord.ext import commands
 from discord import Webhook, RequestsWebhookAdapter
 
@@ -14,12 +15,13 @@ EVE_SCOUT_URL = "http://www.eve-scout.com/api/wormholes?systemSearch=Jita"
 
 REQUEST_TIMEOUT = 2
 
-TELEGRAM_URL = ""
-TELEGRAM_TOKEN = ""
-DISCORD_MAIN_WEBHOOK_URL = os.getenv("alerts_webhook")
-DISCORD_HEARTBEAT_WEBHOOK_URL = os.getenv("heartbeat_webhook")
-DISCORD_DEBUG_WEBHOOK_URL = os.getenv("debug_webhook")
+TELEGRAM_URL = config("TELEGRAM_URL")
+TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
+DISCORD_MAIN_WEBHOOK_URL = config("THERABOT_ALERTS_WEBHOOK")
+DISCORD_HEARTBEAT_WEBHOOK_URL = config("THERABOT_HEARTBEAT_WEBHOOK")
+DISCORD_DEBUG_WEBHOOK_URL = config("THERABOT_DEBUG_WEBHOOK")
 MIN_THERA_CONNECTION_THRESHOLD = 5
+
 
 logger = logging.getLogger(__name__)
 
@@ -107,8 +109,11 @@ class TheraConnection():
 
   @staticmethod
   def send_discord_webhook_alert(webhook_url: str, message: str) -> bool:
-      webhook = Webhook.from_url(webhook_url, adapter=RequestsWebhookAdapter())
-      webhook.send(message)
+      if webhook_url and message:
+          webhook = Webhook.from_url(webhook_url, adapter=RequestsWebhookAdapter())
+          webhook.send(message)
+          return True
+      return False
 
   @staticmethod
   def format_message(template: str, values: dict()) -> str:
