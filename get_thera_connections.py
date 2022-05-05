@@ -16,9 +16,9 @@ REQUEST_TIMEOUT = 2
 
 TELEGRAM_URL = ""
 TELEGRAM_TOKEN = ""
-DISCORD_MAIN_WEBHOOK_URL = "https://discord.com/api/webhooks/970973891960905730/FmDClwW45Pkk6LGvsodR9-hn9jU4RxjAkvKIkcLbSKtIHDdU_FdUAOsvD__wwh_5ItWV"
-DISCORD_HEARTBEAT_WEBHOOK_URL = "https://discord.com/api/webhooks/970976880612212787/HfNpkrTmZqaeJStC2qvNqMxDyVUo16UxjjIiBRHlRMDw5zlchzKMRs1quNkQCYmPsE9o"
-DISCORD_DEBUG_WEBHOOK_URL = "https://discord.com/api/webhooks/971011717276499988/aqI-KFY-nww9huVEgVqIaQ5ufOO2lQAGxBixkMyvP2s38utr-2JstSntun3Es0U6qm-H"
+DISCORD_MAIN_WEBHOOK_URL = os.getenv("alerts_webhook")
+DISCORD_HEARTBEAT_WEBHOOK_URL = os.getenv("heartbeat_webhook")
+DISCORD_DEBUG_WEBHOOK_URL = os.getenv("debug_webhook")
 MIN_THERA_CONNECTION_THRESHOLD = 5
 
 logger = logging.getLogger(__name__)
